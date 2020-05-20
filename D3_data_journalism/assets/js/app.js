@@ -17,6 +17,7 @@ var chartHeight = svgHeight - chartMargin.top - chartMargin.bottom;
 var svg = d3
     .select(".scatter")
     .append("svg")
+    .classed("svg_scatter",true)
     .attr("height", svgHeight)
     .attr("width", svgWidth);
 
