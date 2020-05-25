@@ -51,17 +51,34 @@ d3.csv("./assets/data/data.csv").then(function(Data) {
         data.age = +data.age;
     })
 
-    svg.append('g')
+
+    var chart = svg.append('g')
         .selectAll("dot")
         .data(Data)
         .enter()
         .append("circle")
             .attr("cx", function (data) { return x(data.age); } )
             .attr("cy", function (data) { return y(data.smokes); } )
-            .attr("r", 5)
-            .style("fill", "#69b3a2") 
+            .attr("r", 7)
+            .style("fill", "#7cb9e8") 
+            .attr("stroke-width", "1")
+            .attr("stroke", "black");
+    
+    var toolTip = d3.select("#scatter")
+            .append("svg")
+            .classed("tooltip", true);
 
+    chart.on("mouseover", function(d) {
+                toolTip.style("display", "block")
+                    .html(
+                      `<strong>${d.state}`)
+              })
 
+    .on("mouseout", function() {
+                toolTip.style("display", "none");
+              });
+        
+        
 });
   
 
