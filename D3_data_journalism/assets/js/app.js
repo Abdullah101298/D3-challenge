@@ -9,7 +9,7 @@ var svgHeight = 600;
 var chartMargin = {
     top: 30,
     right: 30,
-    bottom: 30,
+    bottom: 60,
     left: 30
   };
 
@@ -72,23 +72,38 @@ d3.csv("./assets/data/data.csv").then(function(Data) {
             .attr("stroke-width", "1")
             .attr("stroke", "black")
 
-    // chartGroup.selectAll(null)
-    //         .data(Data)
-    //         .enter()
-    //         .append("text")
-    //         .text(function (d) { 
-    //             return d.state})  
-    //         .attr("font-family", "sans-serif")
-    //         .attr("font-size", "1px")
-    //         .attr("fill", "red");       
+    // Adding state abbreviations into the plot 
+    chartGroup.selectAll(null)
+            .data(Data)
+            .enter()
+            .append("text")
+            .text(function (d) { 
+                return d.abbr})  
+            .attr("x", function (data) { return x(data.age); } )
+            .attr("y", function (data) { return y(data.smokes); } )
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "7px")
+            .attr("fill", "white")
+            .attr("transform",'translate(-4,1)');       
             
+    
+    // Adding x label 
     chartGroup.append("text")
         .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 20})`)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "16px")
         .text("Age (Years)");
             
-    //         chartGroup.append("text")
-    //           .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 37})`)
-    //             .text("Smurf Sightings");
+    // Adding y label 
+    chartGroup.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - chartMargin.left)
+        .attr("x",0 - (chartHeight / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Smokes");
+
+
 
 }).catch(function(error) {
     console.log(error);
