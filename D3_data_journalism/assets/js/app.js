@@ -101,7 +101,7 @@ d3.csv("./assets/data/data.csv").then(function(Data) {
         .attr("x",0 - (chartHeight / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
-        .text("Smokes");
+        .text("Smokers (%)");
 
 
 
