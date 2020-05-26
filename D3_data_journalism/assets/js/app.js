@@ -32,7 +32,7 @@ d3.csv("./assets/data/data.csv").then(function(Data) {
         .domain([28, d3.max(Data, data => data.age) ])
         .range([ 0, chartWidth ]);
         
-    svg.append("g")
+    chartGroup.append("g")
         .attr("transform", "translate(0," + chartHeight + ")")
         .call(d3.axisBottom(x));
 
@@ -41,10 +41,9 @@ d3.csv("./assets/data/data.csv").then(function(Data) {
         .domain([9,25])
         .range([ chartHeight, 0 ]);
         
-    svg.append("g")
+    chartGroup.append("g")
         .attr("transform", "translate(30,0)")
         .call(d3.axisLeft(y));
-
 
     Data.forEach(function(data) { 
         data.smokes = +data.smokes;
@@ -52,8 +51,8 @@ d3.csv("./assets/data/data.csv").then(function(Data) {
     })
 
 
-    var chart = svg.append('g')
-        .selectAll("dot")
+    chartGroup.append('g')
+        .selectAll("Circle")
         .data(Data)
         .enter()
         .append("circle")
@@ -62,23 +61,28 @@ d3.csv("./assets/data/data.csv").then(function(Data) {
             .attr("r", 7)
             .style("fill", "#7cb9e8") 
             .attr("stroke-width", "1")
-            .attr("stroke", "black");
-    
-    var toolTip = d3.select("#scatter")
-            .append("svg")
-            .classed("tooltip", true);
+            .attr("stroke", "black")
 
-    chart.on("mouseover", function(d) {
-                toolTip.style("display", "block")
-                    .html(
-                      `<strong>${d.state}`)
-              })
+    chartGroup.selectAll(null)
+            .data(Data)
+            .enter()
+            .append("text")
+            .text(function (d) { 
+                return d.state})  
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "1px")
+            .attr("fill", "red");          
 
-    .on("mouseout", function() {
-                toolTip.style("display", "none");
-              });
-        
-        
 });
+
+chartGroup.append("text")
+.attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 20})`)
+  .classed("dow-text text", true)
+  .text("Dow Index");
+
+chartGroup.append("text")
+  .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 37})`)
+    .classed("smurf-text text", true)
+    .text("Smurf Sightings");
   
 
