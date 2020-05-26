@@ -67,7 +67,7 @@ d3.csv("./assets/data/data.csv").then(function(Data) {
         .append("circle")
             .attr("cx", function (data) { return x(data.age); } )
             .attr("cy", function (data) { return y(data.smokes); } )
-            .attr("r", 7)
+            .attr("r", 9)
             .style("fill", "#7cb9e8") 
             .attr("stroke-width", "1")
             .attr("stroke", "black")
@@ -101,8 +101,8 @@ d3.csv("./assets/data/data.csv").then(function(Data) {
         .attr("x",0 - (chartHeight / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
+        .attr("font-size", "16px")
         .text("Smokers (%)");
-
 
 
 }).catch(function(error) {
