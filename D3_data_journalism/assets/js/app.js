@@ -1,8 +1,11 @@
 // @TODO: YOUR CODE HERE!
 
+
+// Define the height and width of the svg in the html code 
 var svgWidth = 960;
 var svgHeight = 600;
 
+// Define the chart margins from each side
 var chartMargin = {
     top: 30,
     right: 30,
@@ -10,10 +13,11 @@ var chartMargin = {
     left: 30
   };
 
-  // Define dimensions of the chart area
+// Define dimensions of the chart area
 var chartWidth = svgWidth - chartMargin.left - chartMargin.right;
 var chartHeight = svgHeight - chartMargin.top - chartMargin.bottom;
 
+// Create the svg wrapper in the html code and create the chart. 
 var svg = d3
     .select("#scatter")
     .append("svg")
@@ -21,6 +25,7 @@ var svg = d3
     .attr("height", svgHeight)
     .attr("width", svgWidth);
 
+//     
 var chartGroup = svg.append("g")
     .attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`);
 
@@ -71,18 +76,18 @@ d3.csv("./assets/data/data.csv").then(function(Data) {
                 return d.state})  
             .attr("font-family", "sans-serif")
             .attr("font-size", "1px")
-            .attr("fill", "red");          
+            .attr("fill", "red");       
+            
+            chartGroup.append("text")
+            .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 20})`)
+              .text("Dow Index");
+            
+            chartGroup.append("text")
+              .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 37})`)
+                .text("Smurf Sightings");
 
 });
 
-chartGroup.append("text")
-.attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 20})`)
-  .classed("dow-text text", true)
-  .text("Dow Index");
 
-chartGroup.append("text")
-  .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 37})`)
-    .classed("smurf-text text", true)
-    .text("Smurf Sightings");
   
 
