@@ -25,14 +25,23 @@ var svg = d3
     .attr("height", svgHeight)
     .attr("width", svgWidth);
 
-//     
+   
 var chartGroup = svg.append("g")
     .attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`);
 
+// Import the data from the external csv file 
+// Chart will be created in this internal function
 d3.csv("./assets/data/data.csv").then(function(Data) {
 
     console.log(Data);
 
+    // Formatting the Data
+    Data.forEach(function(data) { 
+        data.smokes = +data.smokes;
+        data.age = +data.age;
+    });
+
+    // Adding x acis 
     var x = d3.scaleLinear()
         .domain([28, d3.max(Data, data => data.age) ])
         .range([ 0, chartWidth ]);
@@ -41,21 +50,16 @@ d3.csv("./assets/data/data.csv").then(function(Data) {
         .attr("transform", "translate(0," + chartHeight + ")")
         .call(d3.axisBottom(x));
 
-
+    // Adding y axis 
     var y = d3.scaleLinear()
-        .domain([9,25])
+        .domain([9, d3.max(Data, data => data.smokes)])
         .range([ chartHeight, 0 ]);
         
     chartGroup.append("g")
         .attr("transform", "translate(30,0)")
         .call(d3.axisLeft(y));
 
-    Data.forEach(function(data) { 
-        data.smokes = +data.smokes;
-        data.age = +data.age;
-    })
-
-
+    // Generating scatter plots 
     chartGroup.append('g')
         .selectAll("Circle")
         .data(Data)
@@ -68,25 +72,28 @@ d3.csv("./assets/data/data.csv").then(function(Data) {
             .attr("stroke-width", "1")
             .attr("stroke", "black")
 
-    chartGroup.selectAll(null)
-            .data(Data)
-            .enter()
-            .append("text")
-            .text(function (d) { 
-                return d.state})  
-            .attr("font-family", "sans-serif")
-            .attr("font-size", "1px")
-            .attr("fill", "red");       
+    // chartGroup.selectAll(null)
+    //         .data(Data)
+    //         .enter()
+    //         .append("text")
+    //         .text(function (d) { 
+    //             return d.state})  
+    //         .attr("font-family", "sans-serif")
+    //         .attr("font-size", "1px")
+    //         .attr("fill", "red");       
             
-            chartGroup.append("text")
-            .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 20})`)
-              .text("Dow Index");
+    chartGroup.append("text")
+        .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 20})`)
+        .text("Age (Years)");
             
-            chartGroup.append("text")
-              .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 37})`)
-                .text("Smurf Sightings");
+    //         chartGroup.append("text")
+    //           .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 37})`)
+    //             .text("Smurf Sightings");
 
-});
+}).catch(function(error) {
+    console.log(error);
+  });
+  
 
 
   
