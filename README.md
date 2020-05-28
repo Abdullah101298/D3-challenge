@@ -15,6 +15,10 @@ Include state abbreviations in the circles.
 
 Create and situate your axes and labels to the left and bottom of the chart.
 
+## Conclusion 
+
+Based on the scatter plot, we can see a correlation between the median age of a state and the the percentage of smokers. As the median age decreases, the scatter plot shows the smoker percentage also decreases.
+
 
 
 
